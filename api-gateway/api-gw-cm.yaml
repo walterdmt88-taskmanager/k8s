@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gw-config
+  namespace: default
+data:
+  PORT: "8080"
+  USER_SERVICE_URL: "http://user-svc:3001"
+  TASK_SERVICE_URL: "http://task-svc:3002"
+  CORS_ORIGIN: "http://localhost:3000"

@@ -1,0 +1,18 @@
+auth:
+  password: "devRedisPass"
+
+master:
+  persistence:
+    size: 1Gi
+    storageClass: gp2
+
+replica:
+  persistence:
+    storageClass: gp2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi

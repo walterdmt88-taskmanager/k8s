@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: task-config
+  namespace: default
+data:
+  PORT: "3002"

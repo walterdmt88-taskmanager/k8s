@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+      - name: notification-service
+        image: 905418181527.dkr.ecr.ap-southeast-1.amazonaws.com/notification-service:v1
+        ports:
+        - containerPort: 3003
+        envFrom:
+        - configMapRef:
+            name: notification-config
+        env:
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: notification-secret
+              key: REDIS_URL
+        - name: DISCORD_WEBHOOK_URL
+          valueFrom:
+            secretKeyRef:
+              name: notification-secret
+              key: DISCORD_WEBHOOK_URL
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3003
+          initialDelaySeconds: 15
+          periodSeconds: 10
